@@ -1,0 +1,14 @@
+---
+- name: Connect toCisco Router
+  hosts: testRouters
+  gather_facts: false
+  tasks:
+  - name: retrieve name
+    ios_command:
+      commands: show ip inter br
+    register: print_output
+
+  - name: print output 
+    debug:
+      var: print_output
+

@@ -1,0 +1,19 @@
+#this playbook takes the output from the cisco devices and saves the result in a txt file
+---
+- name: take the output from the cisco ios devices and save it in a text file
+  hosts: testRouters
+  gather_facts: false
+
+  tasks:
+    - name: running multiple commands on remote nodes
+      ios_command:
+        commands:
+          - show version
+
+
+      register: print_output
+
+    - debug: var=print_output.stdout_lines
+
+    - name: save the output to a file
+      copy: content="{{print_output.stdout[0]}}" dest="./output/{{inventory_hostname}}.txt"
